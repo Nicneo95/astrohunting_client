@@ -1,0 +1,13 @@
+.modal-img {
+    width: 100%
+}
+
+.modal-dialog {
+    min-width: 80vw !important;
+}
+
+@media screen and (min-width: 1200px) {
+    .modal-dialog {
+        min-width: 60vw !important;
+    }
+}

@@ -1,0 +1,39 @@
+.form-error-message {
+    color: red;
+    display: block;
+    margin-top: 0.25rem;
+}
+
+.custom-form, .custom-form > form {
+    width: 100%;
+}
+
+.custom-form > form > h5 {
+    margin-top: 1.5rem;
+}
+
+.custom-form > form > div > label {
+    margin-top: 1rem;
+}
+
+.custom-form > form > .alert {
+    margin-top: 1rem;
+}
+
+.custom-btn-group > button {
+    margin-left: 0.5rem;
+}
+
+.custom-btn-group {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.img-url-rendered {
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.5rem;
+}

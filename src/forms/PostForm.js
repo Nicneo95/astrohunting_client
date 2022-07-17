@@ -1,279 +1,509 @@
-// import React from "react";
-// import { FormValidation } from "../validations/FormValidation";
-// import { useForm } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import * as yup from "yup";
-// import "../assets/style/form.css";
-// import "../assets/style/modal.css"
+import React, { Component } from "react";
+import "../assets/style/form.css";
+import "../assets/style/modal.css";
+import axios from "axios";
+import { Alert } from "react-bootstrap";
 
-// export default function PostForm(props) {
-//     const { register, handleSubmit, formState: { errors } } = useForm({
-//         resolver: yupResolver(FormValidation)
-//     })
-//     const submitForm = (data) => {
-//         props.addFormIsValid(),
-//         props.createNewPost(),
-//         console.log(data);
-//     }
+class PostForm extends Component {
+  state = {
+    postId: this.props.postId ?? null,
+    newUserName: "",
+    newImageUrl: "",
+    newTypeOfAstrography: "Solar",
+    newCamera: "",
+    newMount: "",
+    newTelescope: "",
+    newProcessingData: [],
+    newCalibrationFrame: [],
+    newLatitude: "",
+    newLongitude: "",
+    newDescription: "",
+    submitSuccess: null,
+    submitError: null,
+    errors: {
+      newUserName: null,
+      newImageUrl: null,
+      newTypeOfAstrography: null,
+      newCamera: null,
+      newMount: null,
+      newTelescope: null,
+      newProcessingData: null,
+      newCalibrationFrame: null,
+      newLatitude: null,
+      newLongitude: null,
+      newDescription: null,
+    },
+  };
 
-//     return (
-//         <div className='container-fluid d-flex flex-column align-items-center'>
-//             <div className='custom-form'>
-//                 <form onSubmit={handleSubmit(submitForm)}>
-//                     <h5>Create New Post</h5>
-//                     {/* new post information */}
-//                     {/* username */}
-//                     <div>
-//                         <label>Username</label>
-//                         <input className="form-control"
-//                             type="text"
-//                             name="newUserName"
-//                             value={props.newUserName}
-//                             {...register("newUserName", { onChange: props.updateFormField })} />
-//                         {errors.newUserName ? <span className="form-error-message"> {errors.newUserName?.message} </span> : null}
-//                     </div>
-//                     {/* image url */}
-//                     <div>
-//                         <label>Image URL of Sightings</label>
-//                         <input className="form-control"
-//                             type="text"
-//                             name="newImageUrl"
-//                             value={props.newImageUrl}
-//                             {...register("newImageUrl", { onChange: props.updateFormField })} />
-//                         {errors.newImageUrl ? <span className="form-error-message"> {errors.newImageUrl?.message} </span> : null}
-//                         {props.newImageUrl ? <img src={props.newImageUrl}
-//                             alt="Rendered from URL"
-//                             className='image-url-rendered' /> : null}
-//                     </div>
-//                     {/* description input */}
-//                     <div>
-//                         <label>Description</label>
-//                         <textarea className="form-control"
-//                             name="newDescription"
-//                             value={props.newDescription}
-//                             placeholder="Write a short description on the animal"
-//                             rows="5"
-//                             {...register("newDescription", { onChange: props.updateFormField })}></textarea>
-//                         {errors.newDescription ? <span className="form-error-message"> {errors.newDescription?.message} </span> : null}
-//                     </div>
-//                     {/* type of astrography */}
-//                     <div>
-//                         <label>Type of Astrography</label>
-//                         <select className="form-select form-control"
-//                             name="newTypeOfAstrography"
-//                             onChange={props.updateFormField}
-//                             value={props.newTypeOfAstrography}>
-//                             <option value="Solar">Solar</option>
-//                             <option value="Planetary">Planetary</option>
-//                             <option value="Deep Sky">Deep Sky</option>
-//                         </select>
-//                     </div>
-//                     {/* equipment use */}
-//                     <h5> Equipment used </h5>
-//                     <div>
-//                         <div>
-//                             <label>Camera</label>
-//                             <input className="form-control"
-//                                 type="text"
-//                                 name="newCamera"
-//                                 value={props.newCamera}
-//                                 placeholder="Brand/Model of camera"
-//                                 {...register("newCamera", { onChange: props.updateFormField })}
-//                             />
-//                             {errors.newCamera ? <span className="form-error-message"> {errors.newCamera?.message} </span> : null}
-//                         </div>
-//                         <div>
-//                             <label>Mount</label>
-//                             <input className="form-control"
-//                                 type="text"
-//                                 name="newMount"
-//                                 value={props.newMount}
-//                                 {...register("newMount", { onChange: props.updateFormField })} />
-//                             {errors.newMount ? <span className="form-error-message"> {errors.newMount?.message} </span> : null}
-//                         </div>
-//                         <div>
-//                             <label>Telescope</label>
-//                             <input className="form-control"
-//                                 type="text"
-//                                 name="newTelescope"
-//                                 value={props.newTelescope}
-//                                 {...register("newTelescope", { onChange: props.updateFormField })} />
-//                             {errors.newTelescope ? <span className="form-error-message"> {errors.newTelescope?.message} </span> : null}
-//                         </div>    
-//                     </div>
-//                     {/* processing data */}
-//                     <div>
-//                         <label className="form-check-label d-block" >Processing Data</label>
-//                         <div className="form-check form-check-inline">
-//                             <input className="form-check-input"
-//                                 type="checkbox"
-//                                 name="newProcessingData"
-//                                 value="PixInsight"
-//                                 onChange={props.updateCheckbox}
-//                                 checked={props.newProcessingData.includes("PixInsight")}
-//                                 id="pixInsight" />
-//                             <label className="form-check-label" htmlFor="pixInsight">PixInsight</label>
-//                         </div>
-//                         <div className="form-check form-check-inline">
-//                             <input className="form-check-input"
-//                                 type="checkbox"
-//                                 name="newProcessingData"
-//                                 value="Stacker"
-//                                 onChange={props.updateCheckbox}
-//                                 checked={props.newProcessingData.includes("Stacker")}
-//                                 id="stacker" />
-//                             <label className="form-check-label" htmlFor="stacker">Stacker</label>
-//                         </div>
-//                         <div className="form-check form-check-inline">
-//                             <input className="form-check-input"
-//                                 type="checkbox"
-//                                 name="newProcessingData"
-//                                 value="Deep Sky"
-//                                 onChange={props.updateCheckbox}
-//                                 checked={props.newProcessingData.includes("Deep Sky")}
-//                                 id="deep-sky" />
-//                             <label className="form-check-label" htmlFor="deep-sky">Deep Sky</label>
-//                         </div>
-//                         <div className="form-check form-check-inline">
-//                             <input className="form-check-input"
-//                                 type="checkbox"
-//                                 name="newProcessingData"
-//                                 value="Photoshop"
-//                                 onChange={props.updateCheckbox}
-//                                 checked={props.newProcessingData.includes("Photoshop")}
-//                                 id="photoshop" />
-//                             <label className="form-check-label" htmlFor="photoshop">Photoshop</label>
-//                         </div>
-//                         <div className="form-check form-check-inline">
-//                             <input className="form-check-input"
-//                                 type="checkbox"
-//                                 name="newProcessingData"
-//                                 value="Lightroom"
-//                                 onChange={props.updateCheckbox}
-//                                 checked={props.newProcessingData.includes("Lightroom")}
-//                                 id="lightroom" />
-//                             <label className="form-check-label" htmlFor="lightroom">Lightroom</label>
-//                         </div>
-//                         <div className="form-check form-check-inline">
-//                             <input className="form-check-input"
-//                                 type="checkbox"
-//                                 name="newProcessingData"
-//                                 value="StarStaX"
-//                                 onChange={props.updateCheckbox}
-//                                 checked={props.newProcessingData.includes("StarStaX")}
-//                                 id="starstax" />
-//                             <label className="form-check-label" htmlFor="starstax">StarStaX</label>
-//                         </div>
-//                     </div>
-//                     {/* calibration frame */}
-//                     <div>
-//                         <label className="form-check-label d-block" >Calibration Frame</label>
-//                         <div className="form-check form-check-inline">
-//                             <input className="form-check-input"
-//                                 type="checkbox"
-//                                 name="newCalibrationFrame"
-//                                 value="Dark"
-//                                 checked={props.newCalibrationFrame.includes("Dark")}
-//                                 id="dark"
-//                                 {...register("newCalibrationFrame", { onChange: props.updateCheckbox })} />
-//                             <label className="form-check-label" htmlFor="dark">Dark</label>
-//                         </div>
-//                         <div className="form-check form-check-inline">
-//                             <input className="form-check-input"
-//                                 type="checkbox"
-//                                 name="newCalibrationFrame"
-//                                 value="Bias"
-//                                 checked={props.newCalibrationFrame.includes("Bias")}
-//                                 id="bias"
-//                                 {...register("newCalibrationFrame", { onChange: props.updateCheckbox })} />
-//                             <label className="form-check-label" htmlFor="bias">Bias</label>
-//                         </div>
-//                         <div className="form-check form-check-inline">
-//                             <input className="form-check-input"
-//                                 type="checkbox"
-//                                 name="newCalibrationFrame"
-//                                 value="Flat"
-//                                 checked={props.newCalibrationFrame.includes("Flat")}
-//                                 id="flat"
-//                                 {...register("newCalibrationFrame", { onChange: props.updateCheckbox })} />
-//                             <label className="form-check-label" htmlFor="flat">Flat</label>
-//                         </div>
-//                         <div className="form-check form-check-inline">
-//                             <input className="form-check-input"
-//                                 type="checkbox"
-//                                 name="newCalibrationFrame"
-//                                 value="Light"
-//                                 checked={props.newCalibrationFrame.includes("Light")}
-//                                 id="light"
-//                                 {...register("newCalibrationFrame", { onChange: props.updateCheckbox })} />
-//                             <label className="form-check-label" htmlFor="light">Light</label>
-//                         </div>
-//                         {errors.newCalibrationFrame ? <span className="form-error-message"> {errors.newCalibrationFrame?.message} </span> : null}
-//                     </div>
-//                     {/* location */}
-//                     <h5> Location </h5>
-//                     <div>
-//                         <div>
-//                             <label>Latitude</label>
-//                             <input className="form-control"
-//                                 type="text"
-//                                 name="newLatitude"
-//                                 value={props.newLatitude}
-//                                 placeholder="Latitude"
-//                                 {...register("newLatitude", { onChange: props.updateFormField })}
-//                             />
-//                             {errors.newLatitude ? <span className="form-error-message"> {errors.newLatitude?.message} </span> : null}
-//                         </div>
-//                         <div>
-//                             <label>Longitude</label>
-//                             <input className="form-control"
-//                                 type="text"
-//                                 name="newLongitude"
-//                                 value={props.newLongitude}
-//                                 {...register("newLongitude", { onChange: props.updateFormField })} />
-//                             {errors.newLongitude ? <span className="form-error-message"> {errors.newLongitude?.message} </span> : null}
-//                         </div>
-//                     </div>
-//                     {props.addValid ? <div className='alert alert-success'>Sighting sucessfully created. Redirecting to Browse page.</div> : null}
-//                     <div className='custom-btn-group'>
-//                         {/* submit button */}
-//                         <button className="btn btn-primary custom-btn-primary"
-//                             type="submit"
-//                         >Add</button>
-//                         {/* button to trigger cancel modal */}
-//                         <button className="btn btn-secondary"
-//                             type="button"
-//                             data-bs-toggle="modal"
-//                             data-bs-target="#cancelAddModal">Cancel</button>
-//                     </div>
-//                     {/* cancel modal */}
-//                     <div className="modal fade" id="cancelAddModal" data-bs-backdrop="static" data-bs-keyboard="false">
-//                         <div className="modal-dialog modal-dialog-centered">
-//                             <div className="modal-content">
-//                                 <div className="modal-header">
-//                                     <h5 className="modal-title" id="cancelAddModalLabel">Discard changes?</h5>
-//                                     <button type="button"
-//                                         className="btn-close"
-//                                         data-bs-dismiss="modal"
-//                                         aria-label="Close"></button>
-//                                 </div>
-//                                 <div className="modal-body">
-//                                     Discard changes and head to browse page?
-//                                 </div>
-//                                 <div className="modal-footer">
-//                                     <button type="button"
-//                                         className="btn btn-danger"
-//                                         data-bs-dismiss="modal"
-//                                         onClick={() => props.setActive('browse')}>Discard changes</button>
-//                                     <button type="button"
-//                                         className="btn btn-secondary"
-//                                         data-bs-dismiss="modal">Cancel</button>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </form>
-//             </div>
-//         </div>
-//     )
-// }
+  componentDidMount() {
+    if (this.props.postId) {
+      axios
+        .get(`http://127.0.0.1:8000/getPost/${this.props.postId}`)
+        .then((res) => {
+          const post = res.data;
+          console.log(post);
+          this.setState({
+            newUserName: post.userName,
+            newImageUrl: post.imageUrl,
+            newTypeOfAstrography: post.typeOfAstrography,
+            newCamera: post.equipment.camera,
+            newMount: post.equipment.mount,
+            newTelescope: post.equipment.telescope,
+            newProcessingData: post.processingData,
+            newCalibrationFrame: post.calibrationFrame,
+            newLatitude: post.location.latitude,
+            newLongitude: post.location.longitude,
+            newDescription: post.description,
+          });
+        });
+    }
+  }
+
+  // function for form fields 2 way binding
+  updateFormField = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // function for checkboxes 2 way binding
+  updateCheckbox = (e) => {
+    console.log(e.target.value, e.target.name);
+    const checked = e.target.checked;
+    let newItems = [...this.state[e.target.name]];
+    if (checked) {
+      newItems.push(e.target.value);
+    } else {
+      let index = newItems.findIndex((i) => i === e.target.value);
+      newItems.splice(index, 1);
+    }
+    this.setState({ [e.target.name]: newItems });
+  };
+
+  submitForm = (e) => {
+    e.preventDefault();
+    let hasError = false;
+    let errors = this.state.errors;
+    if (
+      !this.state.newUserName ||
+      this.state.newUserName.length > 70 ||
+      this.state.newUserName.length < 2
+    ) {
+      errors.newUserName =
+        "Please enter a username between 2 and 70 characters";
+      hasError = true;
+    }
+    if (!this.state.newImageUrl) {
+      errors.newImageUrl = "Please enter a valid image url";
+      hasError = true;
+    }
+    if (
+      !this.state.newTypeOfAstrography ||
+      this.state.newTypeOfAstrography.length > 9 ||
+      this.state.newTypeOfAstrography.length < 5
+    ) {
+      errors.newTypeOfAstrography =
+        "Please enter a type of astrography between 5 and 9 characters";
+      hasError = true;
+    }
+    if (!this.state.newCamera) {
+      errors.newCamera = "Please enter a camera";
+      hasError = true;
+    }
+    if (!this.state.newMount) {
+      errors.newMount = "Please enter a mount";
+      hasError = true;
+    }
+    if (!this.state.newTelescope) {
+      errors.newTelescope = "Please enter a mount";
+      hasError = true;
+    }
+    if (this.state.newProcessingData.length === 0) {
+      errors.newProcessingData = "Please select a processing data";
+      hasError = true;
+    }
+    if (this.state.newCalibrationFrame.length === 0) {
+      errors.newCalibrationFrame = "Please select a calibration frame";
+      hasError = true;
+    }
+    if (!this.state.newLatitude || isNaN(this.state.newLatitude)) {
+      errors.newLatitude = "Please enter a numerical latitude";
+      hasError = true;
+    }
+    if (!this.state.newLongitude || isNaN(this.state.newLongitude)) {
+      errors.newLongitude = "Please enter a numerical longitude";
+      hasError = true;
+    }
+    if (!this.state.newDescription) {
+      errors.newDescription = "Please enter a description";
+      hasError = true;
+    }
+    if (hasError) {
+      this.setState({ errors });
+      return;
+    }
+
+    let newPost = {
+      "userName": this.state.newUserName,
+      "imageUrl": this.state.newImageUrl,
+      "typeOfAstrography": this.state.newTypeOfAstrography,
+      "equipment": {
+        "camera": this.state.newCamera,
+        "mount": this.state.newMount,
+        "telescope": this.state.newTelescope,
+      },
+      "processingData": this.state.newProcessingData,
+      "calibrationFrame": this.state.newCalibrationFrame,
+      "location": {
+        "latitude": this.state.newLatitude,
+        "longitude": this.state.newLongitude,
+      },
+      "description": this.state.newDescription,
+    };
+    console.log(newPost);
+    if (this.state.postId === null) {
+      this.addPost(newPost);
+    } else {
+      this.updatePost(newPost);
+    }
+  };
+
+  addPost = (data) => {
+    axios
+      .post("http://127.0.0.1:8000/createPosts", data)
+      .then((response) => {
+        console.log(response);
+        this.setState({ submitSuccess: true });
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({ submitError: error });
+      });
+  };
+  updatePost = (data) => {
+    axios
+      .put("http://127.0.0.1:8000/updatePosts/" + this.state.postId, data)
+      .then((response) => {
+        console.log(response);
+        this.setState({ submitSuccess: true });
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({ submitError: error });
+      });
+  };
+
+  render() {
+    let equipments = [
+      {
+        "label": "Camera",
+        "name": "newCamera",
+        "placeholder": "Brand/Model of camera",
+      },
+      {
+        "label": "Mount",
+        "name": "newMount",
+        "placeholder": "",
+      },
+      {
+        "label": "Telescope",
+        "name": "newTelescope",
+        "placeholder": "",
+      },
+    ];
+
+    let processingData = [
+      {
+        "label": "PixInsight",
+        "value": "PixInsight",
+        "id": "pixInsight",
+      },
+      {
+        "label": "Stacker",
+        "value": "Stacker",
+        "id": "stacker",
+      },
+      {
+        "label": "Deep Sky",
+        "value": "Deep Sky",
+        "id": "deep-sky",
+      },
+      {
+        "label": "Photoshop",
+        "value": "Photoshop",
+        "id": "photoshop",
+      },
+      {
+        "label": "Lightroom",
+        "value": "Lightroom",
+        "id": "lightroom",
+      },
+      {
+        "label": "StarStaX",
+        "value": "StarStaX",
+        "id": "starstax",
+      },
+    ];
+
+    let calibrationFrames = [
+      {
+        "label": "Dark",
+        "value": "Dark",
+        "id": "dark",
+      },
+      {
+        "label": "Bias",
+        "value": "Bias",
+        "id": "bias",
+      },
+      {
+        "label": "Flat",
+        "value": "Flat",
+        "id": "flat",
+      },
+      {
+        "label": "Light",
+        "value": "Light",
+        "id": "light",
+      },
+    ];
+
+    return (
+      <div className="container-fluid d-flex flex-column align-items-center">
+        <div className="custom-form">
+          <form onSubmit={this.submitForm}>
+            <h5>{this.state.postId ? "Edit Existing" : "Create New"} Post</h5>
+
+            {/* username */}
+            <div>
+              <label>Username</label>
+              <input
+                className="form-control"
+                type="text"
+                name="newUserName"
+                value={this.state.newUserName}
+                onChange={this.updateFormField}
+              />
+              {this.state.errors.newUserName ? (
+                <span className="form-error-message">
+                  {" "}
+                  {this.state.errors.newUserName}{" "}
+                </span>
+              ) : null}
+            </div>
+            {/* image url */}
+            <div>
+              <label>Image URL of Sightings</label>
+              <input
+                className="form-control"
+                type="text"
+                name="newImageUrl"
+                value={this.state.newImageUrl}
+                onChange={this.updateFormField}
+              />
+              {this.state.errors.newImageUrl ? (
+                <span className="form-error-message">
+                  {" "}
+                  {this.state.errors.newImageUrl}{" "}
+                </span>
+              ) : null}
+              {this.state.newImageUrl ? (
+                <img
+                  src={this.state.newImageUrl}
+                  alt="Rendered from URL"
+                  className="image-url-rendered"
+                />
+              ) : null}
+            </div>
+            {/* type of astrography */}
+            <div>
+              <label>Type of Astrography</label>
+              <select
+                className="form-select form-control"
+                name="newTypeOfAstrography"
+                onChange={this.updateFormField}
+                value={this.state.newTypeOfAstrography}
+              >
+                <option value="solar">Solar</option>
+                <option value="planetary">Planetary</option>
+                <option value="deep sky">Deep Sky</option>
+              </select>
+            </div>
+            {/* equipment use */}
+            <h5> Equipment used </h5>
+            <div>
+              {equipments &&
+                equipments.map((equipment) => (
+                  <div key={equipment.name}>
+                    <label>{equipment.label}</label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name={equipment.name}
+                      value={this.state[equipment.name]}
+                      placeholder={equipment.placeholder}
+                      onChange={this.updateFormField}
+                    />
+                    {this.state.errors[equipment.name] ? (
+                      <span className="form-error-message">
+                        {" "}
+                        {this.state.errors[equipment.name]}{" "}
+                      </span>
+                    ) : null}
+                  </div>
+                ))}
+            </div>
+            {/* processing data */}
+            <div>
+              <label className="form-check-label d-block">
+                Processing Data
+              </label>
+              {processingData &&
+                processingData.map((datum) => (
+                  <div
+                    className="form-check form-check-inline"
+                    key={datum.name}
+                  >
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="newProcessingData"
+                      value={datum.value}
+                      onChange={this.updateCheckbox}
+                      checked={this.state.newProcessingData.includes(
+                        datum.value
+                      )}
+                      id={datum.id}
+                    />
+                    <label className="form-check-label" htmlFor={datum.id}>
+                      {datum.label}
+                    </label>
+                  </div>
+                ))}
+            </div>
+            {/* calibration frame */}
+            <div>
+              <label className="form-check-label d-block">
+                Calibration Frame
+              </label>
+              {calibrationFrames &&
+                calibrationFrames.map((calibrationFrame) => (
+                  <div
+                    className="form-check form-check-inline"
+                    key={calibrationFrame.name}
+                  >
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="newCalibrationFrame"
+                      value={calibrationFrame.value}
+                      checked={this.state.newCalibrationFrame.includes(
+                        calibrationFrame.value
+                      )}
+                      id={calibrationFrame.id}
+                      onChange={this.updateCheckbox}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor={calibrationFrame.id}
+                    >
+                      {calibrationFrame.label}
+                    </label>
+                  </div>
+                ))}
+              {this.state.errors.newCalibrationFrame ? (
+                <span className="form-error-message">
+                  {" "}
+                  {this.state.errors.newCalibrationFrame}{" "}
+                </span>
+              ) : null}
+            </div>
+            {/* location */}
+            <h5> Location </h5>
+            <div>
+              <div>
+                <label>Latitude</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="newLatitude"
+                  value={this.state.newLatitude}
+                  placeholder="Latitude"
+                  onChange={this.updateFormField}
+                />
+                {this.state.errors.newLatitude ? (
+                  <span className="form-error-message">
+                    {" "}
+                    {this.state.errors.newLatitude}{" "}
+                  </span>
+                ) : null}
+              </div>
+              <div>
+                <label>Longitude</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="newLongitude"
+                  value={this.state.newLongitude}
+                  onChange={this.updateFormField}
+                />
+                {this.state.errors.newLongitude ? (
+                  <span className="form-error-message">
+                    {" "}
+                    {this.state.errors.newLongitude}{" "}
+                  </span>
+                ) : null}
+              </div>
+            </div>
+            {/* description input */}
+            <div>
+              <label>Description</label>
+              <textarea
+                className="form-control"
+                name="newDescription"
+                value={this.state.newDescription}
+                placeholder="Write a short description on the animal"
+                rows="5"
+                onChange={this.updateFormField}
+              ></textarea>
+              {this.state.errors.newDescription ? (
+                <span className="form-error-message">
+                  {" "}
+                  {this.state.errors.newDescription}{" "}
+                </span>
+              ) : null}
+            </div>
+
+            <div className="custom-btn-group">
+              {/* submit button */}
+              <button
+                className="btn btn-primary custom-btn-primary"
+                type="submit"
+              >
+                {this.state.postId ? "Edit" : "Add"}
+              </button>
+              {/* button to trigger cancel modal */}
+              <button
+                className="btn btn-secondary"
+                type="button"
+                onClick={this.props.showBrowse}
+              >
+                Cancel
+              </button>
+            </div>
+            {this.state.submitSuccess && (
+              <Alert variant="success">
+                The post has been added successfully!
+              </Alert>
+            )}
+            {this.state.submitError && (
+              <Alert variant="danger">{this.state.submitError?.message}</Alert>
+            )}
+          </form>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default PostForm;
