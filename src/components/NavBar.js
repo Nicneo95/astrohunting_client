@@ -1,66 +1,81 @@
-// import { useState, useEffect } from "react";
-// import { Navbar, Nav, Container } from "react-bootstrap";
-// import logo from "../assets/images/logo.png";
+import { Component } from "react";
+import { Navbar, Nav, Container } from "react-bootstrap";
+import logo from "../assets/images/logo.png";
 
-// export const NavBar = () => {
-//   const [activeLink, setActiveLink] = useState("home");
-//   const [scrolled, setScrolled] = useState(false);
+class NavBar extends Component {
+  state = {
+    page: this.props.page,
+    scrolled: false,
+  };
 
-//   useEffect(() => {
-//     const onScroll = () => {
-//       if (window.scrollY > 50) {
-//         setScrolled(true);
-//       } else {
-//         setScrolled(false);
-//       }
-//     };
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.page !== nextProps.page) {
+      console.log(prevState.page, nextProps.page);
+      return { page: nextProps.page, scrolled: false };
+    }
+  }
 
-//     window.addEventListener("scroll", onScroll);
+  onScroll = () => {
+    if (window.scrollY > 50) {
+      this.setState({ scrolled: true });
+    } else {
+      this.setState({ scrolled: false });
+    }
+  };
+  componentDidMount() {
+    window.addEventListener("scroll", this.onScroll);
+  }
 
-//     return () => window.removeEventListener("scroll", onScroll);
-//   }, []);
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+  }
 
-//   const onUpdateActiveLink = (value) => {
-//     setActiveLink(value);
-//   };
-
-//   return (
-//     <Navbar expand="md" className={scrolled ? "scrolled" : ""}>
-//       <Container>
-//         <Navbar.Brand href="/">
-//           <div className="logoText">
-//             <img className="astroHuntingLogo" src={logo} alt="Logo" />
-//             <div>AstroHunting</div>
-//           </div>
-//         </Navbar.Brand>
-//         <Navbar.Toggle aria-controls="basic-navbar-nav">
-//           <span className="navbar-toggler-icon"></span>
-//         </Navbar.Toggle>
-//         <Navbar.Collapse id="basic-navbar-nav">
-//           <Nav className="ms-auto">
-//             <Nav.Link
-//               href="#browse"
-//               className={
-//                 activeLink === "browse" ? "active navbar-link" : "navbar-link"
-//               }
-//               onClick={() => onUpdateActiveLink("browse")}
-//             >
-//               BROWSE
-//             </Nav.Link>
-//             <Nav.Link
-//               href="#createPost"
-//               className={
-//                 activeLink === "createPost"
-//                   ? "active navbar-link"
-//                   : "navbar-link"
-//               }
-//               onClick={() => onUpdateActiveLink("createPost")}
-//             >
-//               CREATE POST
-//             </Nav.Link>
-//           </Nav>
-//         </Navbar.Collapse>
-//       </Container>
-//     </Navbar>
-//   );
-// };
+  render() {
+    return (
+      <Navbar expand="md" className={this.state.scrolled ? "scrolled" : ""}>
+        <Container>
+          <Navbar.Brand href="/">
+            <div className="logoText">
+              <img className="astroHuntingLogo" src={logo} alt="Logo" />
+              <div>AstroHunting</div>
+            </div>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav">
+            <span className="navbar-toggler-icon"></span>
+          </Navbar.Toggle>
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ms-auto">
+              <Nav.Link
+                href="#browse"
+                className={
+                  this.state.page === "browse"
+                    ? "active navbar-link"
+                    : "navbar-link"
+                }
+                onClick={() => {
+                  this.props.showBrowse();
+                }}
+              >
+                BROWSE
+              </Nav.Link>
+              <Nav.Link
+                href="#createPost"
+                className={
+                  this.state.page === "createpost"
+                    ? "active navbar-link"
+                    : "navbar-link"
+                }
+                onClick={() => {
+                  this.props.showCreatePost();
+                }}
+              >
+                CREATE POST
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    );
+  }
+}
+export default NavBar;
