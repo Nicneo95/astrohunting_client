@@ -38,7 +38,7 @@ class PostForm extends Component {
   componentDidMount() {
     if (this.props.postId) {
       axios
-        .get(`http://127.0.0.1:8000/getPost/${this.props.postId}`)
+        .get(`https://astrohunting.herokuapp.com/getPosts/${this.props.postId}`)
         .then((res) => {
           const post = res.data;
           console.log(post);
@@ -170,7 +170,7 @@ class PostForm extends Component {
 
   addPost = (data) => {
     axios
-      .post("http://127.0.0.1:8000/createPosts", data)
+      .post("https://astrohunting.herokuapp.com/createPosts", data)
       .then((response) => {
         console.log(response);
         this.setState({ submitSuccess: true });
@@ -182,7 +182,7 @@ class PostForm extends Component {
   };
   updatePost = (data) => {
     axios
-      .put("http://127.0.0.1:8000/updatePosts/" + this.state.postId, data)
+      .put("https://astrohunting.herokuapp.com/updatePosts/" + this.state.postId, data)
       .then((response) => {
         console.log(response);
         this.setState({ submitSuccess: true });

@@ -27,7 +27,7 @@ body {
   font-weight: 400;
   overflow-x: hidden;
   position: relative;
-  background-color: #121212 !important;
+  background-color: black !important;
   color: #fff !important;
   font-family: 'Libre Baskerville', sans-serif !important;
 }
@@ -88,7 +88,7 @@ nav.navbar {
 }
 nav.navbar.scrolled {
   padding: 0px 0;
-  background-color: #121212;
+  background-color: black;
 }
 nav.navbar a.navbar-brand {
     width: 9%;
@@ -250,6 +250,11 @@ display:block;
   position: relative;
   z-index: 3;
 }
+.background {
+  display:block;
+  position: relative;
+  z-index: 3;
+}
 .stars {
   background:#000 url("./assets/images/stars.png") repeat top center;
   z-index:0;
@@ -265,3 +270,43 @@ display:block;
     opacity: .4;
     animation:move-clouds-back 200s linear infinite;
 }
+.postCard {
+  width: 100%;
+  margin: 20px
+  }
+  
+  .postCard .card-body {
+    background-color: #121212;
+  }
+  
+  .postCard .card-text {
+    font-size: 12px;
+  }
+  
+  .browse {
+    margin-top: 148px;
+    padding: 20px 0;
+  }
+  
+  .createPost {
+    margin-top: 148px !important;
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .mr-2 {
+    margin-right: 10px
+  }
+  
+  .modal-content {
+    background-color: #212121 !important;
+  }
+  
+  @media screen and (max-width: 1100px) {
+    .postCard {
+      margin: 0;
+      margin-bottom: 10px;
+      margin-top: 10px
+    }
+  }
