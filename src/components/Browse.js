@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { PostModal } from "./PostModal";
 import { Container, Row, Col, Card, Button, Badge } from "react-bootstrap";
-
 
 class Browse extends Component {
   state = {
@@ -93,14 +93,16 @@ class Browse extends Component {
   };
 
   deletePost = (id) => {
-    axios.delete(`https://astrohunting.herokuapp.com/deletePosts/${id}`).then((res) => {
-      console.log(res);
-      let posts = this.state.posts.filter((post) => post._id !== id);
-      let filteredPosts = this.state.filteredPosts.filter(
-        (post) => post._id !== id
-      );
-      this.setState({ posts, filteredPosts, showModal: false });
-    });
+    axios
+      .delete(`https://astrohunting.herokuapp.com/deletePosts/${id}`)
+      .then((res) => {
+        console.log(res);
+        let posts = this.state.posts.filter((post) => post._id !== id);
+        let filteredPosts = this.state.filteredPosts.filter(
+          (post) => post._id !== id
+        );
+        this.setState({ posts, filteredPosts, showModal: false });
+      });
   };
 
   componentDidMount() {
@@ -188,188 +190,200 @@ class Browse extends Component {
   render() {
     let equipments = [
       {
-        "label": "Camera",
-        "name": "camera",
-        "placeholder": "Brand/Model of camera",
+        label: "Camera",
+        name: "camera",
+        placeholder: "Model of camera",
       },
       {
-        "label": "Mount",
-        "name": "mount",
-        "placeholder": "",
+        label: "Mount",
+        name: "mount",
+        placeholder: "Model of mount",
       },
       {
-        "label": "Telescope",
-        "name": "telescope",
-        "placeholder": "",
+        label: "Telescope",
+        name: "telescope",
+        placeholder: "Model of telescope",
       },
     ];
 
     let processingData = [
       {
-        "label": "PixInsight",
-        "value": "PixInsight",
-        "id": "pixInsight",
+        label: "PixInsight",
+        value: "PixInsight",
+        id: "pixInsight",
       },
       {
-        "label": "Stacker",
-        "value": "Stacker",
-        "id": "stacker",
+        label: "Stacker",
+        value: "Stacker",
+        id: "stacker",
       },
       {
-        "label": "Deep Sky",
-        "value": "Deep Sky",
-        "id": "deep-sky",
+        label: "Deep Sky",
+        value: "Deep Sky",
+        id: "deep-sky",
       },
       {
-        "label": "Photoshop",
-        "value": "Photoshop",
-        "id": "photoshop",
+        label: "Photoshop",
+        value: "Photoshop",
+        id: "photoshop",
       },
       {
-        "label": "Lightroom",
-        "value": "Lightroom",
-        "id": "lightroom",
+        label: "Lightroom",
+        value: "Lightroom",
+        id: "lightroom",
       },
       {
-        "label": "StarStaX",
-        "value": "StarStaX",
-        "id": "starstax",
+        label: "StarStaX",
+        value: "StarStaX",
+        id: "starstax",
       },
     ];
 
     return (
-    <React.Fragment>
+      <React.Fragment>
         <div className="stars"></div>
         <div className="twinkling"></div>
         <div className="clouds"></div>
         <div className="background">
-            <section className="browse">
-                <Container>
-                <Row className="aligh-items-center">
-                    <Col xs={12} md={12} xl={2}>
-                    <form onSubmit={this.submitForm}>
-                        <div>
-                        <label>Username</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="userName"
-                            value={this.state.userName}
-                            onChange={this.updateFormField}
-                        />
-                        {this.state.errors.userName ? (
-                            <span className="form-error-message">
-                            {" "}
-                            {this.state.errors.userName}{" "}
-                            </span>
-                        ) : null}
-                        </div>
-                        <div>
-                        <label>Type of Astrography</label>
-                        <select
-                            multiple
-                            className="form-select form-control"
-                            name="typeOfAstrography"
-                            onChange={this.updateMultiSelect}
-                            value={this.state.typeOfAstrography}
-                        >
-                            <option value="solar">Solar</option>
-                            <option value="planetary">Planetary</option>
-                            <option value="deep sky">Deep Sky</option>
-                        </select>
-                        </div>
-                        <div>
-                        {equipments &&
-                            equipments.map((equipment) => (
-                            <div key={equipment.name}>
-                                <label>{equipment.label}</label>
-                                <input
-                                className="form-control"
-                                type="text"
-                                name={equipment.name}
-                                value={this.state[equipment.name]}
-                                placeholder={equipment.placeholder}
-                                onChange={this.updateFormField}
-                                />
-                                {this.state.errors[equipment.name] ? (
-                                <span className="form-error-message">
-                                    {" "}
-                                    {this.state.errors[equipment.name]}{" "}
-                                </span>
-                                ) : null}
-                            </div>
-                            ))}
-                        </div>
-                        <div>
-                        <label className="form-check-label d-block">
-                            Processing Data
-                        </label>
-                        {processingData &&
-                            processingData.map((datum) => (
-                            <div
-                                className="form-check form-check-inline"
-                                key={datum.name}
-                            >
-                                <input
-                                className="form-check-input"
-                                type="checkbox"
-                                name="processingData"
-                                value={datum.value}
-                                onChange={this.updateCheckbox}
-                                checked={this.state.processingData.includes(
-                                    datum.value
-                                )}
-                                id={datum.id}
-                                />
-                                <label className="form-check-label" htmlFor={datum.id}>
-                                {datum.label}
-                                </label>
-                            </div>
-                            ))}
-                        </div>
-                        <button className="btn btn-primary mr-2" type="submit">
-                        Filter
-                        </button>
-                        <button
-                        className="btn btn-secondary"
-                        type="button"
-                        onClick={this.resetFilter}
-                        >
-                        Reset
-                        </button>
-                    </form>
-                    </Col>
-                    <Col xs={12} md={12} xl={10}>
-                    <Row className="align-items-center">
-                        {this.state.filteredPosts.map((post) => (
-                        <Col xs={12} md={4} xl={3} key={post._id}>
-                            <Card className="postCard">
-                            <Card.Img variant="top" src={post.imageUrl} />
-                            <Card.Body>
-                                <Card.Title>{post.userName}</Card.Title>
-                                <Card.Text>
-                                {post.description.slice(0, 100)}...
-                                </Card.Text>
-                                <Card.Subtitle className="mb-3">
-                                <Badge bg="secondary">{post.typeOfAstrography}</Badge>
-                                </Card.Subtitle>
-                                <Button
-                                variant="primary"
-                                onClick={() => this.handleShow(post)}
-                                >
-                                More
-                                </Button>
-                            </Card.Body>
-                            </Card>
-                        </Col>
+          <section className="browse">
+            <Container>
+              <Row className="aligh-items-center">
+                <Col xs={12} md={12} xl={2}>
+                  <form onSubmit={this.submitForm}>
+                    <div>
+                      <label>Username</label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        name="userName"
+                        value={this.state.userName}
+                        placeholder="Search"
+                        onChange={this.updateFormField}
+                      />
+                      {this.state.errors.userName ? (
+                        <span className="form-error-message">
+                          {" "}
+                          {this.state.errors.userName}{" "}
+                        </span>
+                      ) : null}
+                    </div>
+                    <div>
+                      <label>Type of Astrography</label>
+                      <select
+                        className="form-select form-control"
+                        name="typeOfAstrography"
+                        onChange={this.updateMultiSelect}
+                        value={this.state.typeOfAstrography}
+                      >
+                        <option value="solar">Solar</option>
+                        <option value="planetary">Planetary</option>
+                        <option value="deep sky">Deep Sky</option>
+                      </select>
+                    </div>
+                    <div>
+                      {equipments &&
+                        equipments.map((equipment) => (
+                          <div key={equipment.name}>
+                            <label>{equipment.label}</label>
+                            <input
+                              className="form-control"
+                              type="text"
+                              name={equipment.name}
+                              value={this.state[equipment.name]}
+                              placeholder={equipment.placeholder}
+                              onChange={this.updateFormField}
+                            />
+                            {this.state.errors[equipment.name] ? (
+                              <span className="form-error-message">
+                                {" "}
+                                {this.state.errors[equipment.name]}{" "}
+                              </span>
+                            ) : null}
+                          </div>
                         ))}
-                    </Row>
-                    </Col>
-                </Row>
-                </Container>
-            </section>
+                    </div>
+                    <div>
+                      <label className="form-check-label d-block">
+                        Processing Data
+                      </label>
+                      {processingData &&
+                        processingData.map((datum) => (
+                          <div
+                            className="form-check form-check-inline"
+                            key={datum.name}
+                          >
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              name="processingData"
+                              value={datum.value}
+                              onChange={this.updateCheckbox}
+                              checked={this.state.processingData.includes(
+                                datum.value
+                              )}
+                              id={datum.id}
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor={datum.id}
+                            >
+                              {datum.label}
+                            </label>
+                          </div>
+                        ))}
+                    </div>
+                    <button className="btn btn-primary mr-2" type="submit">
+                      Filter
+                    </button>
+                    <button
+                      className="btn btn-secondary"
+                      type="button"
+                      onClick={this.resetFilter}
+                    >
+                      Reset
+                    </button>
+                  </form>
+                </Col>
+                <Col xs={12} md={12} xl={10}>
+                  <Row className="align-items-center">
+                    {this.state.filteredPosts.map((post) => (
+                      <Col xs={12} md={4} xl={3} key={post._id}>
+                        <Card className="postCard">
+                          <Card.Img variant="top" src={post.imageUrl} />
+                          <Card.Body>
+                            <Card.Title>{post.userName}</Card.Title>
+                            <Card.Text>
+                              {post.description.slice(0, 100)}...
+                            </Card.Text>
+                            <Card.Subtitle className="mb-3">
+                              <Badge bg="secondary">
+                                {post.typeOfAstrography}
+                              </Badge>
+                            </Card.Subtitle>
+                            <Button
+                              variant="primary"
+                              onClick={() => this.handleShow(post)}
+                            >
+                              More
+                            </Button>
+                          </Card.Body>
+                        </Card>
+                      </Col>
+                    ))}
+                  </Row>
+                </Col>
+              </Row>
+            </Container>
+            <PostModal
+              showModal={this.state.showModal}
+              handleClose={this.handleClose}
+              deletePost={this.deletePost}
+              updatePost={this.updatePost}
+              {...this.state.selectedPost}>
+            </PostModal>
+          </section>
         </div>
-    </React.Fragment>
+      </React.Fragment>
     );
   }
 }

@@ -38,7 +38,7 @@ class PostForm extends Component {
   componentDidMount() {
     if (this.props.postId) {
       axios
-        .get(`https://astrohunting.herokuapp.com/getPosts/${this.props.postId}`)
+        .get(`https://astrohunting.herokuapp.com/getPost/${this.props.postId}`)
         .then((res) => {
           const post = res.data;
           console.log(post);
@@ -198,17 +198,17 @@ class PostForm extends Component {
       {
         "label": "Camera",
         "name": "newCamera",
-        "placeholder": "Brand/Model of camera",
+        "placeholder": "Model of camera",
       },
       {
         "label": "Mount",
         "name": "newMount",
-        "placeholder": "",
+        "placeholder": "Model of mount",
       },
       {
         "label": "Telescope",
         "name": "newTelescope",
-        "placeholder": "",
+        "placeholder": "Model of telescope",
       },
     ];
 
@@ -282,6 +282,7 @@ class PostForm extends Component {
                 type="text"
                 name="newUserName"
                 value={this.state.newUserName}
+                placeholder="Enter Username"
                 onChange={this.updateFormField}
               />
               {this.state.errors.newUserName ? (
@@ -299,6 +300,7 @@ class PostForm extends Component {
                 type="text"
                 name="newImageUrl"
                 value={this.state.newImageUrl}
+                placeholder="https://example.com/JBAYcvA5R6I.jpg"
                 onChange={this.updateFormField}
               />
               {this.state.errors.newImageUrl ? (
@@ -330,7 +332,7 @@ class PostForm extends Component {
               </select>
             </div>
             {/* equipment use */}
-            <h5> Equipment used </h5>
+            <h5> Equipment Use </h5>
             <div>
               {equipments &&
                 equipments.map((equipment) => (
@@ -380,6 +382,12 @@ class PostForm extends Component {
                     </label>
                   </div>
                 ))}
+                {this.state.errors.newProcessingData ? (
+                <span className="form-error-message">
+                  {" "}
+                  {this.state.errors.newProcessingData}{" "}
+                </span>
+              ) : null}
             </div>
             {/* calibration frame */}
             <div>
@@ -428,7 +436,7 @@ class PostForm extends Component {
                   type="text"
                   name="newLatitude"
                   value={this.state.newLatitude}
-                  placeholder="Latitude"
+                  placeholder="eg. 1.290270"
                   onChange={this.updateFormField}
                 />
                 {this.state.errors.newLatitude ? (
@@ -445,6 +453,7 @@ class PostForm extends Component {
                   type="text"
                   name="newLongitude"
                   value={this.state.newLongitude}
+                  placeholder="eg. 103.851959"
                   onChange={this.updateFormField}
                 />
                 {this.state.errors.newLongitude ? (
@@ -462,7 +471,7 @@ class PostForm extends Component {
                 className="form-control"
                 name="newDescription"
                 value={this.state.newDescription}
-                placeholder="Write a short description on the animal"
+                placeholder="Write a short description"
                 rows="5"
                 onChange={this.updateFormField}
               ></textarea>

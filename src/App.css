@@ -83,8 +83,9 @@ nav.navbar {
   position: fixed;
   width: 100%;
   top: 0;
-  z-index: 9999;
+  z-index: 900;
   transition:  0.32 ease-in-out;
+  background-color: black;
 }
 nav.navbar.scrolled {
   padding: 0px 0;
@@ -281,6 +282,10 @@ display:block;
   
   .postCard .card-text {
     font-size: 12px;
+  }
+
+  .card-img, .card-img-top {
+    height: 150px;
   }
   
   .browse {
