@@ -105,6 +105,7 @@ class Browse extends Component {
       });
   };
 
+  // get search result
   componentDidMount() {
     axios.get(`https://astrohunting.herokuapp.com/getPosts`).then((res) => {
       const posts = res.data;
@@ -112,6 +113,7 @@ class Browse extends Component {
     });
   }
 
+  // reset search result
   resetFilter = (e) => {
     e.preventDefault();
     this.setState({
@@ -125,6 +127,7 @@ class Browse extends Component {
     });
   };
 
+  // search validation
   submitForm = (e) => {
     e.preventDefault();
     let hasError = false;

@@ -35,6 +35,7 @@ class PostForm extends Component {
     },
   };
 
+  // get data from database
   componentDidMount() {
     if (this.props.postId) {
       axios
@@ -80,6 +81,7 @@ class PostForm extends Component {
     this.setState({ [e.target.name]: newItems });
   };
 
+  // submit form and check for errors
   submitForm = (e) => {
     e.preventDefault();
     let hasError = false;
@@ -165,6 +167,7 @@ class PostForm extends Component {
       return;
     }
 
+    // function to create new post or update post
     let newPost = {
       "userName": this.state.newUserName,
       "imageUrl": this.state.newImageUrl,
@@ -190,6 +193,7 @@ class PostForm extends Component {
     }
   };
 
+  // post data to server to create new post
   addPost = (data) => {
     axios
       .post("https://astrohunting.herokuapp.com/createPosts", data)
@@ -202,6 +206,8 @@ class PostForm extends Component {
         this.setState({ submitError: error });
       });
   };
+
+   // post data to server to update post
   updatePost = (data) => {
     axios
       .put("https://astrohunting.herokuapp.com/updatePosts/" + this.state.postId, data)
