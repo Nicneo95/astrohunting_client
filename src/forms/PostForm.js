@@ -92,10 +92,14 @@ class PostForm extends Component {
       errors.newUserName =
         "Please enter a username between 2 and 70 characters";
       hasError = true;
+    } else {
+      errors.newUserName = "" ;
     }
     if (!this.state.newImageUrl) {
       errors.newImageUrl = "Please enter a valid image url";
       hasError = true;
+    } else {
+      errors.newImageUrl = "" ;
     }
     if (
       !this.state.newTypeOfAstrography ||
@@ -105,38 +109,56 @@ class PostForm extends Component {
       errors.newTypeOfAstrography =
         "Please enter a type of astrography between 5 and 9 characters";
       hasError = true;
+    } else {
+      errors.newTypeOfAstrography = "" ;
     }
     if (!this.state.newCamera) {
       errors.newCamera = "Please enter a camera";
       hasError = true;
+    } else {
+      errors.newCamera = "" ;
     }
     if (!this.state.newMount) {
       errors.newMount = "Please enter a mount";
       hasError = true;
+    } else {
+      errors.newMount = "" ;
     }
     if (!this.state.newTelescope) {
       errors.newTelescope = "Please enter a mount";
       hasError = true;
+    } else {
+      errors.newTelescope = "" ;
     }
     if (this.state.newProcessingData.length === 0) {
       errors.newProcessingData = "Please select a processing data";
       hasError = true;
+    } else {
+      errors.newProcessingData = "" ;
     }
     if (this.state.newCalibrationFrame.length === 0) {
       errors.newCalibrationFrame = "Please select a calibration frame";
       hasError = true;
+    } else {
+      errors.newCalibrationFrame = "" ;
     }
     if (!this.state.newLatitude || isNaN(this.state.newLatitude)) {
       errors.newLatitude = "Please enter a numerical latitude";
       hasError = true;
+    } else {
+      errors.newLatitude= "" ;
     }
     if (!this.state.newLongitude || isNaN(this.state.newLongitude)) {
       errors.newLongitude = "Please enter a numerical longitude";
       hasError = true;
+    } else {
+      errors.newLongitude = "" ;
     }
     if (!this.state.newDescription) {
       errors.newDescription = "Please enter a description";
       hasError = true;
+    } else {
+      errors.newDescription= "" ;
     }
     if (hasError) {
       this.setState({ errors });
