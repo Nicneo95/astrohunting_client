@@ -100,19 +100,24 @@ Browse page gets longer when more post are being created | Implement pagination
 # TEST CASES
 | #  | Test Description | Test Steps | Expected Result |
 | ------------- | ------------- | ------------- | ------------- |
-|  | In home.html | In home.html | In home.html |
-|  | Prerequisite: The user is at search bar of the home page |  |  |
-| 1 | Able to search for ticker symbol of company | 1) Enter the ticker symbol into the textbox as aapl <br/> 2) Click the find icon or enter | Page will be redirect to stock-analysis.html <br/> <ul> <li> Company information should be display on side bar </li> <li> Default 1 day synchronise chart should load |
-|  | In stock-analysis.html | In stock-analysis.html | In stock-analysis.html |
-| 2 | Company earning and revenues chart should render | 1) Click on earning button at side bar | Expected to see reported and estimated EPS bar chart |
-| 3 | Company debt to assets chart should render | 1) Click on financials button at side bar | Expected to see assets and liabilities bar chart with Debt to Assets show as line graph |
-|  | Prerequisite: The user is at synchronise chart |  |  |
-| 4 | Synchronise chart able to render the different time series selected base on the radio button selected | 1) Click on 1W radio button | Chart label date should show date frequency + 7 days (DD MMM) from left to right |
-|  | In market-maps.html | In market-maps.html | In market-maps.html |
-| 5 | Able to display the different tree chart selected in the side button | 1) Click on Australia at the side bar | Tableau chart show render |
-|  | Prerequisite: The user is at Australia tree chart |  |  |
-| 6 | Able to select the sector user wish to display | 1) Unclick the all checkbox <br/> 2) Select consumer staples checkbox | Expected to only see compaines in consumer staples sector |
-| 7 | Hightlight textbox searching for company | 1) Click on the highlight checkbox <br/> 2) Select AGL Energy Limited | Box should be highlighted |
+| 1 | In Home Page | In Home Page | In Home Page |
+| 1.1 | Browse collection | 1) Click on the "Browse" button | Users is directed to the Browse page. User will see a search bar and multiple cards showing the details of the post |
+| 1.2 | Create Post | 1) Click on the "Create Post" button | Users is navigated to Create Post page. User will see a form to add new post into the database |
+| 2 | In Browse Page | In Browse Page | In Browse Page |
+| 2.1 | Search for Username | 1) Type into Username textbox as emma | Result that match the keyword will be display after a few seconds |
+|  | Prerequisite: Prerequisite after a search is done |  |  |
+| 2.2 | Reset Search function | 1) Click on "Reset" | All input field in the search function will be cleared and Browse page will refresh to show all collections |
+| 2.3 | View detailed post information | 1) Click on "More" button on any post | A modal will appear with the detailed information of the post |
+|  | Prerequisite: Prerequisite Users click on more |  |  |
+| 2.4.1 | Edit post information | 1) Click on "Update" button inside the modal <br/> 2) Change the desired input field </br> 3) Click on the edit button to submit request | Redirect to the form page with all the previous information showed </br> Upon successful submission of fields to be edit a green alert box will show "The post has been added successfully!" |
+| 2.4.2 | Delete post information | 1) Click on "Delete" button inside the modal | Go back to the Browse page the post is no longer on display |
+| 3 | In Create Post Page | In Create Post Page | In Create Post Page |
+| 3.1 | Add new post | 1) Fill up the form. All fields are required </br> 2) Click on the "Add" button | A sucess message will be shown if new post created. </br> Validation error will show if inputs are not filled up correctly |
+| 3.2 | Cancel new post | 1) Click on the "Cancel" button | Redirect to the Browse page |
+
+
+
+
 
 # Deployment
 Hosted on Netlify free plan, without database. All dependencies are delivered via CDN. 
