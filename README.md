@@ -47,7 +47,7 @@ A form page for anyone who wants to create a new post. By providing all the info
 ## Design
 
 ### Color Palette
-![alt text]()
+![alt text](src/assets/images/colour.png)
 
 The choice of color was primarily based on black which associated with the dark sky, while white represent the stars. Purple add mystery, and can even symbolise creativity for the webpage.
 
