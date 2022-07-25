@@ -86,7 +86,7 @@ Features | Descriptions
 Browse all post created | Showing all post created by the community in card form.
 View details of post created | Users can click on the individual post and will display all the information (e.g., equipment, location, processing data etc...).
 Search post | Users can search for post based on various criteria. The search will occur as the users type into the inputs or check/uncheck the checkboxes.
-Add new post | Users can add a new post through the form.
+Add new post | Users can add a new post through the create post page.
 Manage post | Users can edit/delete the post.
 
 ## Limitations and future implementations
