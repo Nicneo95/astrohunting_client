@@ -26,7 +26,7 @@ Provide a knowledge sharing platform.
 Consistent display of information for users and provide a search function for them to find the type of astrography that they are interested in.
 
 ## UI/UX:
-### User Storiest 
+### User Stories
 - As someone who is keen in learning and picking up astrography as a hobby. I would like to know what are the equipment used and how experience astrographer take their images. 
 Acceptance Criteria
 Able to pick up some tips shared by communities
@@ -79,6 +79,23 @@ Body: ``font-family: 'Libre Baskerville', regular;``
 - GitHub
 - Netlify
 - Heroku
+
+# Features
+Features | Descriptions
+-------- | -------------
+Browse all post created | Showing all post created by the community in card form.
+View details of post created | Users can click on the individual post and will display all the information (e.g., equipment, location, processing data etc...).
+Search post | Users can search for post based on various criteria. The search will occur as the users type into the inputs or check/uncheck the checkboxes.
+Add new post | Users can add a new post through the form.
+Manage post | Users can edit/delete the post.
+
+## Limitations and future implementations
+Limitations | Future Implementations to Resolve Limitations
+----------- | -------------
+Anyone can edit/delete post not belonging to them | Create a user authentication where users can only edit/delete post belonging to them.
+Images are "uploaded" by providing a working URL of an image and only one image can be "uploaded" for each listing. | Implement an image upload system to allow users to upload multiple image files from the web application. Then display all the images that were uploaded on the frontend web application.
+Browse page gets longer when more post are being created | Implement pagination 
+
 
 # TEST CASES
 | #  | Test Description | Test Steps | Expected Result |
