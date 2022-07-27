@@ -1,4 +1,6 @@
 # astrohunting 
+<img src="src/assets/images/astrohunting.png" style="display: block">
+
 >Note: This is a bootcamp project where an interactive web application was created using React, Express.js and MongoDB
 # URL to live website
 [https://astrohunting.netlify.app/](https://astrohunting.netlify.app/)
